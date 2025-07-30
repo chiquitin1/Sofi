@@ -274,10 +274,68 @@
     }
     
     /* Sección de Administración */
-    .admin-section { display: none; }
+    .admin-section {
+      display: none;
+      padding-top: 2.5rem;
+    }
+    
+    #volverAdminBtn {
+      margin-bottom: 2.5rem;
+      margin-right: 2rem;
+      background: var(--primary-dark);
+      font-size: 1.08rem;
+      padding: 0.7rem 1.7rem;
+      border-radius: 50px;
+      box-shadow: 0 2px 12px rgba(58,124,165,0.15);
+      font-weight: 600;
+    }
+    
+    @media (max-width: 600px) {
+      #volverAdminBtn {
+        margin-bottom: 1.5rem;
+        margin-right: 0;
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
     
     /* Sección de Búsqueda */
     .search-section { margin-bottom: 2rem; }
+    
+    .search-form {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+    .search-form .form-group {
+      flex: 1;
+      min-width: 180px;
+      margin-bottom: 0;
+    }
+    .search-form .search-button {
+      flex: 0 0 auto;
+      margin-top: 0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (max-width: 900px) {
+      .search-form {
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-form .form-group {
+        min-width: 100%;
+        margin-bottom: 1rem;
+      }
+      .search-form .search-button {
+        width: 100%;
+        height: auto;
+      }
+    }
     
     /* Grid de Equipaje */
     .luggage-grid {
@@ -300,6 +358,7 @@
       width: 100%;
       height: 200px;
       object-fit: cover;
+      cursor: pointer;
     }
     
     .luggage-info {
@@ -358,6 +417,38 @@
       cursor: pointer;
     }
     
+    /* Estilos para el modal de imagen */
+    #imageModal .modal-content {
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+    
+    #imageModal .close-modal {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 2rem;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      border: none;
+    }
+    
+    #expandedImage {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    
     /* Footer */
     footer {
       text-align: center;
@@ -385,29 +476,6 @@
       margin-right: 1rem;
       border-radius: 50%;
       border: 2px solid var(--accent);
-    }
-    
-    .social-icons {
-      margin: 2rem 0;
-    }
-    
-    .social-icons a {
-      color: var(--white);
-      margin: 0 1rem;
-      font-size: 1.5rem;
-      transition: all 0.3s;
-      display: inline-block;
-      width: 45px;
-      height: 45px;
-      line-height: 45px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-    }
-    
-    .social-icons a:hover {
-      color: var(--accent);
-      background: rgba(255,255,255,0.2);
-      transform: translateY(-3px);
     }
     
     .footer-links {
@@ -459,6 +527,42 @@
       z-index: 1000;
     }
     
+    /* Botón Volver */
+    .volver-btn {
+      position: absolute;
+      top: 140px;
+      left: 40px;
+      z-index: 2000;
+      padding: 0.7rem 1.7rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 2px 12px rgba(58,124,165,0.15);
+      font-size: 1.08rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .volver-btn:hover {
+      background: var(--accent);
+      color: var(--secondary);
+      box-shadow: 0 6px 24px rgba(58,124,165,0.25);
+      transform: translateY(-2px) scale(1.04);
+    }
+    @media (max-width: 600px) {
+      .volver-btn {
+        top: 110px;
+        left: 10px;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+      }
+    }
+    
     /* Responsive */
     @media (max-width: 768px) {
       header {
@@ -497,6 +601,9 @@
 </head>
 
 <body>
+  <button class="volver-btn" onclick="window.history.back()">
+    <i class="fas fa-arrow-left"></i> Volver
+  </button>
   <!-- Header -->
   <header>
     <div class="header-decoration dec-1"></div>
@@ -505,14 +612,15 @@
     <div class="logo-container">
       <img src="images/sofi.jpg" alt="Bag Keeper Logo">
       <div class="logo-text">
-        <h1>Bag Keeper</h1>
+        <h1>BagKeeper</h1>
         <p>Su perdida, nuestra prioridad</p>
       </div>
     </div>
     
     <nav class="nav-links">
-      <a href="index.html"><i class="fas fa-home"></i> Inicio</a>
-      <a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a>
+        <a href="index.html"><i class="fas fa-home"></i> Inicio</a>
+        <a href="index.html"><i class="fas fa-home"></i> Contacto</a>
+        <a href="index.html"><i class="fas fa-home"></i> EQUIPAJE</a>
     </nav>
   </header>
 
@@ -528,7 +636,13 @@
   <div class="main-content">
     <!-- Admin Section -->
     <div class="admin-section" id="adminSection">
-      <h2>Agregar Equipaje Perdido</h2>
+      <div style="display: flex; align-items: center; margin-bottom: 2.5rem;">
+        <button id="volverAdminBtn" class="btn-submit" type="button">
+          <i class="fas fa-arrow-left"></i> Volver al equipaje
+        </button>
+        <h2 style="margin: 0 0 0 1.5rem;">Agregar Equipaje Perdido</h2>
+      </div>
+      <div id="userLuggageList" style="margin-bottom: 2.5rem;"></div>
       <form id="addLuggageForm">
         <div class="form-group">
           <label for="luggage-title">Título</label>
@@ -680,19 +794,20 @@
     </div>
   </div>
 
+  <!-- Image Preview Modal -->
+  <div class="modal" id="imageModal">
+    <div class="modal-content" style="background: transparent; box-shadow: none; max-width: 90%; max-height: 90%; display: flex; justify-content: center; align-items: center;">
+      <button class="close-modal" style="color: white; font-size: 2rem; background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">&times;</button>
+      <img id="expandedImage" src="" alt="Imagen ampliada" style="max-width: 100%; max-height: 90vh; object-fit: contain;">
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer id="contacto">
     <div class="footer-content">
       <div class="footer-logo">
         <img src="images/sofi.jpg" alt="Bag Keeper Logo">
-        <h3>Bag Keeper</h3>
-      </div>
-      
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <h3>BagKeeper</h3>
       </div>
       
       <div class="footer-links">
@@ -705,11 +820,11 @@
       
       <div class="contact-info">
         <p><i class="fas fa-map-marker-alt"></i> Aeropuerto El Dorado, Bogotá</p>
-        <p><i class="fas fa-phone-alt"></i> +57 1 234 5678</p>
-        <p><i class="fas fa-envelope"></i> info@bagkeeper.com</p>
+        <p><i class="fas fa-phone-alt"></i> +57 3332699214</p>
+        <p><i class="fas fa-envelope"></i> bagkeepersas@gmail.com</p>
       </div>
       
-      <p class="copyright">© 2025 Bag Keeper. Todos los derechos reservados.</p>
+      <p class="copyright">© 2025 BagKeeper. Todos los derechos reservados.</p>
     </div>
   </footer>
 
@@ -723,58 +838,74 @@
     // Datos de ejemplo para las maletas
     const luggageData = {
       1: {
-        title: "Maleta Negra",
-        image: "https://images.unsplash.com/photo-1569793783999-8cb09a474ad2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        title: "Maleta Negra con Ruedas",
+        image: "https://images-na.ssl-images-amazon.com/images/I/71O4xAok3uL._SL1500_.jpg",
         flight: "AV123 - Bogotá a Medellín",
         date: "15/06/2023",
         color: "Negro",
         colorCode: "#333",
-        details: "Maleta rígida con ruedas, etiqueta azul",
+        details: "Maleta rígida con ruedas, marca American Tourister",
         additionalInfo: "Encontrada en la cinta de reclamo de equipaje 3. Contiene ropa y artículos personales. Tiene una etiqueta con el nombre 'J. Rodríguez'."
       },
       2: {
-        title: "Maleta Roja",
-        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        title: "Maleta Azul con Patrones",
+        image: "https://m.media-amazon.com/images/I/316EETu7QoL.jpg",
         flight: "LA456 - Bogotá a Cali",
         date: "12/06/2023",
-        color: "Rojo",
-        colorCode: "#ff0000",
-        details: "Maleta blanda con asa superior, marca Samsonite",
-        additionalInfo: "Recuperada en la zona de llegadas nacionales. Tiene un distintivo de equipaje prioritario. Contiene documentos y electrónicos."
-      },
-      3: {
-        title: "Maleta Azul",
-        image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        flight: "P5789 - Bogotá a San Andrés",
-        date: "10/06/2023",
         color: "Azul",
         colorCode: "#0066cc",
-        details: "Maleta de tamaño mediano con ruedas giratorias",
-        additionalInfo: "Encontrada en el área de transferencia de equipaje. Tiene una correa de identificación amarilla. Contiene ropa de verano y recuerdos de viaje."
+        details: "Maleta blanda con asa superior, diseño moderno",
+        additionalInfo: "Recuperada en la zona de llegadas nacionales. Tiene un distintivo de equipaje prioritario."
+      },
+      3: {
+        title: "Maleta Elegante Negra",
+        image: "https://m.media-amazon.com/images/I/31Bg+tPedeL.jpg",
+        flight: "P5789 - Bogotá a San Andrés",
+        date: "10/06/2023",
+        color: "Negro",
+        colorCode: "#000000",
+        details: "Maleta de tamaño mediano con ruedas giratorias, estilo ejecutivo",
+        additionalInfo: "Encontrada en el área de transferencia de equipaje. Tiene una correa de identificación plateada."
       },
       4: {
-        title: "Mochila Gris",
-        image: "https://images.unsplash.com/photo-1599398057879-53e4a5c0d1a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        title: "Maleta de Viaje Grande",
+        image: "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCO/122988226_01/w=800,h=800,fit=pad",
         flight: "VH345 - Bogotá a Cartagena",
         date: "08/06/2023",
         color: "Gris",
         colorCode: "#808080",
-        details: "Mochila de viaje con múltiples compartimentos",
-        additionalInfo: "Recuperada en la sala de espera de la puerta 12. Contiene una laptop, libros y artículos de aseo personal. Tiene un parche de una bandera colombiana."
+        details: "Maleta grande con sistema de expansión, múltiples compartimentos",
+        additionalInfo: "Recuperada en la sala de espera de la puerta 12. Tiene un parche de una bandera colombiana."
       }
     };
 
-    // Renderizar tarjetas de equipaje
+    // Cargar datos de equipaje desde localStorage
+function getStoredLuggage() {
+  const stored = localStorage.getItem('luggageData');
+  return stored ? JSON.parse(stored) : {};
+}
+
+// Guardar datos de equipaje en localStorage
+function saveStoredLuggage(data) {
+  localStorage.setItem('luggageData', JSON.stringify(data));
+}
+
+// Combinar datos de ejemplo y los guardados
+function getAllLuggageData() {
+  return { ...luggageData, ...getStoredLuggage() };
+}
+
+// Renderizar tarjetas de equipaje
     function renderLuggageCards() {
       const luggageGrid = document.getElementById('luggageGrid');
       luggageGrid.innerHTML = '';
-      
-      Object.entries(luggageData).forEach(([id, luggage]) => {
+      const allData = getAllLuggageData();
+      Object.entries(allData).forEach(([id, luggage]) => {
         const card = document.createElement('div');
         card.className = 'luggage-card';
         card.innerHTML = `
           <div class="luggage-image">
-            <img src="${luggage.image}" alt="${luggage.title}">
+            <img src="${luggage.image}" alt="${luggage.title}" class="clickable-card-image" style="cursor: pointer;">
           </div>
           <div class="luggage-info">
             <h3>${luggage.title}</h3>
@@ -805,6 +936,14 @@
           </div>
         `;
         luggageGrid.appendChild(card);
+      });
+      
+      // Agregar eventos de clic a las imágenes de las tarjetas
+      document.querySelectorAll('.clickable-card-image').forEach(img => {
+        img.addEventListener('click', function() {
+          document.getElementById('expandedImage').src = this.src;
+          document.getElementById('imageModal').classList.add('show');
+        });
       });
       
       assignEventListeners();
@@ -861,11 +1000,12 @@
     // Mostrar detalles del equipaje
     function showLuggageDetails(e) {
       const luggageId = e.target.getAttribute('data-id');
-      const luggage = luggageData[luggageId];
-      
+      const allData = getAllLuggageData();
+      const luggage = allData[luggageId];
+      if (!luggage) return;
       document.getElementById('modalBody').innerHTML = `
         <div class="modal-image">
-          <img src="${luggage.image}" alt="${luggage.title}">
+          <img src="${luggage.image}" alt="${luggage.title}" class="clickable-image" style="cursor: pointer;">
         </div>
         <div class="modal-details">
           <div class="modal-detail">
@@ -887,7 +1027,10 @@
           <i class="fas fa-user-tag"></i> Reclamar esta maleta
         </button>
       `;
-      
+      document.querySelector('.clickable-image').addEventListener('click', function() {
+        document.getElementById('expandedImage').src = this.src;
+        document.getElementById('imageModal').classList.add('show');
+      });
       document.getElementById('luggageModal').classList.add('show');
     }
 
@@ -901,61 +1044,222 @@
 
     // Buscar equipaje
     function searchLuggage() {
-      const airline = document.getElementById('search-airline').value;
-      const flight = document.getElementById('search-flight').value;
-      const color = document.getElementById('search-color').value;
-      
-      alert(`Búsqueda realizada:\nAerolínea: ${airline || 'Todas'}\nVuelo: ${flight || 'Todos'}\nColor: ${color || 'Todos'}`);
+      const airline = document.getElementById('search-airline').value.trim().toLowerCase();
+      const flight = document.getElementById('search-flight').value.trim().toLowerCase();
+      const color = document.getElementById('search-color').value.trim().toLowerCase();
+
+      const filtered = Object.entries(luggageData).filter(([id, luggage]) => {
+        let match = true;
+        if (airline) {
+          match = match && luggage.flight.toLowerCase().includes(airline);
+        }
+        if (flight) {
+          match = match && luggage.flight.toLowerCase().includes(flight);
+        }
+        if (color) {
+          match = match && luggage.color.toLowerCase() === color;
+        }
+        return match;
+      });
+
+      const luggageGrid = document.getElementById('luggageGrid');
+      luggageGrid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        luggageGrid.innerHTML = '<p>No se encontraron maletas con los criterios seleccionados.</p>';
+        return;
+      }
+
+      filtered.forEach(([id, luggage]) => {
+        const card = document.createElement('div');
+        card.className = 'luggage-card';
+        card.innerHTML = `
+          <div class="luggage-image">
+            <img src="${luggage.image}" alt="${luggage.title}" class="clickable-card-image" style="cursor: pointer;">
+          </div>
+          <div class="luggage-info">
+            <h3>${luggage.title}</h3>
+            <div class="luggage-details">
+              <div class="luggage-detail">
+                <i class="fas fa-plane"></i>
+                <span>Vuelo: ${luggage.flight}</span>
+              </div>
+              <div class="luggage-detail">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Fecha: ${luggage.date}</span>
+              </div>
+              <div class="luggage-detail">
+                <i class="fas fa-palette"></i>
+                <span>Color: <span class="luggage-color" style="background-color: ${luggage.colorCode};"></span> ${luggage.color}</span>
+              </div>
+              <div class="luggage-detail">
+                <i class="fas fa-info-circle"></i>
+                <span>Detalles: ${luggage.details}</span>
+              </div>
+            </div>
+            <button class="button view-details" data-id="${id}">
+              <i class="fas fa-expand"></i> Ver detalles
+            </button>
+            <button class="button claim-btn" data-id="${id}" style="margin-top: 10px; background: var(--primary); color: white;">
+              <i class="fas fa-user-tag"></i> Es mi maleta
+            </button>
+          </div>
+        `;
+        luggageGrid.appendChild(card);
+      });
+
+      // Reasignar eventos a los nuevos elementos
+      document.querySelectorAll('.clickable-card-image').forEach(img => {
+        img.addEventListener('click', function() {
+          document.getElementById('expandedImage').src = this.src;
+          document.getElementById('imageModal').classList.add('show');
+        });
+      });
+      assignEventListeners();
     }
 
     // Mostrar/ocultar sección de administración
     function toggleAdminSection() {
       const adminSection = document.getElementById('adminSection');
-      adminSection.style.display = adminSection.style.display === 'none' ? 'block' : 'none';
+      if (adminSection.style.display === 'none' || adminSection.style.display === '') {
+        const pass = prompt('Ingrese la contraseña para acceder:');
+        if (pass === 'Bagkeeper. JLS') {
+          adminSection.style.display = 'block';
+          renderUserLuggageList();
+        } else if (pass !== null) {
+          alert('Contraseña incorrecta.');
+        }
+      } else {
+        adminSection.style.display = 'none';
+      }
     }
 
-    // Agregar nuevo equipaje
-    function addNewLuggage(e) {
-      e.preventDefault();
-      
-      const title = document.getElementById('luggage-title').value;
-      const flight = document.getElementById('luggage-flight').value;
-      const date = document.getElementById('luggage-date').value;
-      const color = document.getElementById('luggage-color').value;
-      const colorCode = document.getElementById('luggage-color-code').value;
-      const details = document.getElementById('luggage-details').value;
-      const additionalInfo = document.getElementById('luggage-additional-info').value;
-      const imageFile = document.getElementById('luggage-image').files[0];
-      
-      if (!title || !flight || !date || !color || !colorCode || !details || !additionalInfo || !imageFile) {
-        alert('Por favor complete todos los campos requeridos.');
-        return;
-      }
-      
+    // Renderizar lista de equipaje del usuario
+function renderUserLuggageList() {
+  const userLuggageList = document.getElementById('userLuggageList');
+  const stored = getStoredLuggage();
+  userLuggageList.innerHTML = '<h3>Mis maletas agregadas</h3>';
+  if (Object.keys(stored).length === 0) {
+    userLuggageList.innerHTML += '<p>No has agregado maletas.</p>';
+    return;
+  }
+  Object.entries(stored).forEach(([id, luggage]) => {
+    userLuggageList.innerHTML += `
+      <div style="background:#f5f5f5; border-radius:8px; margin-bottom:1rem; padding:1rem; display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <img src="${luggage.image}" alt="${luggage.title}" style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+          <div>
+            <strong>${luggage.title}</strong><br>
+            <span>${luggage.flight}</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <button class="btn-submit" style="background:#d9534f;" onclick="deleteUserLuggage('${id}')"><i class="fas fa-trash"></i> Eliminar</button>
+          <button class="btn-submit" style="background:#f5cb5c; color:#6b4c3b;" onclick="editUserLuggage('${id}')"><i class="fas fa-edit"></i> Modificar</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function deleteUserLuggage(id) {
+  const stored = getStoredLuggage();
+  delete stored[id];
+  saveStoredLuggage(stored);
+  renderUserLuggageList();
+  renderLuggageCards();
+}
+
+function editUserLuggage(id) {
+  const stored = getStoredLuggage();
+  const luggage = stored[id];
+  if (!luggage) return;
+  document.getElementById('luggage-title').value = luggage.title;
+  document.getElementById('luggage-flight').value = luggage.flight;
+  document.getElementById('luggage-date').value = luggage.date;
+  document.getElementById('luggage-color').value = luggage.color;
+  document.getElementById('luggage-color-code').value = luggage.colorCode;
+  document.getElementById('luggage-details').value = luggage.details;
+  document.getElementById('luggage-additional-info').value = luggage.additionalInfo;
+  document.getElementById('image-preview').style.display = 'block';
+  document.getElementById('preview-img').src = luggage.image;
+  document.getElementById('addLuggageForm').setAttribute('data-edit-id', id);
+}
+
+// Modificar addNewLuggage para editar si hay data-edit-id
+function addNewLuggage(e) {
+  e.preventDefault();
+  const title = document.getElementById('luggage-title').value;
+  const flight = document.getElementById('luggage-flight').value;
+  const date = document.getElementById('luggage-date').value;
+  const color = document.getElementById('luggage-color').value;
+  const colorCode = document.getElementById('luggage-color-code').value;
+  const details = document.getElementById('luggage-details').value;
+  const additionalInfo = document.getElementById('luggage-additional-info').value;
+  const imageFile = document.getElementById('luggage-image').files[0];
+  const form = document.getElementById('addLuggageForm');
+  const editId = form.getAttribute('data-edit-id');
+  if (!title || !flight || !date || !color || !colorCode || !details || !additionalInfo || (!imageFile && !editId)) {
+    alert('Por favor complete todos los campos requeridos.');
+    return;
+  }
+  if (editId) {
+    // Editar maleta existente
+    const stored = getStoredLuggage();
+    if (imageFile) {
       const reader = new FileReader();
-      reader.onload = function(e) {
-        const newId = Math.max(...Object.keys(luggageData).map(Number)) + 1;
-        
-        luggageData[newId] = {
-          title,
-          image: e.target.result,
-          flight,
-          date,
-          color,
-          colorCode,
-          details,
-          additionalInfo
+      reader.onload = function(ev) {
+        stored[editId] = {
+          title, image: ev.target.result, flight, date, color, colorCode, details, additionalInfo
         };
-        
+        saveStoredLuggage(stored);
+        renderUserLuggageList();
         renderLuggageCards();
-        e.target.reset();
+        form.reset();
+        form.removeAttribute('data-edit-id');
         document.getElementById('image-preview').style.display = 'none';
-        alert('Equipaje agregado correctamente!');
+        alert('Maleta modificada correctamente!');
       };
       reader.readAsDataURL(imageFile);
+    } else {
+      stored[editId] = {
+        title, image: stored[editId].image, flight, date, color, colorCode, details, additionalInfo
+      };
+      saveStoredLuggage(stored);
+      renderUserLuggageList();
+      renderLuggageCards();
+      form.reset();
+      form.removeAttribute('data-edit-id');
+      document.getElementById('image-preview').style.display = 'none';
+      alert('Maleta modificada correctamente!');
     }
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const stored = getStoredLuggage();
+    const newId = (Object.keys(stored).length ? Math.max(...Object.keys(stored).map(Number)) : Object.keys(luggageData).length) + 1;
+    stored[newId] = {
+      title,
+      image: ev.target.result,
+      flight,
+      date,
+      color,
+      colorCode,
+      details,
+      additionalInfo
+    };
+    saveStoredLuggage(stored);
+    renderLuggageCards();
+    e.target.reset();
+    document.getElementById('image-preview').style.display = 'none';
+    alert('Equipaje agregado correctamente!');
+  };
+  reader.readAsDataURL(imageFile);
+}
 
-    // Enviar formulario de reclamación
+// Enviar formulario de reclamación
     function submitClaim(e) {
       e.preventDefault();
       
@@ -1030,6 +1334,10 @@
 
     // Ejecutar al cargar la página
     document.addEventListener('DOMContentLoaded', init);
+    
+    document.getElementById('volverAdminBtn').addEventListener('click', function() {
+      document.getElementById('adminSection').style.display = 'none';
+    });
   </script>
 </body>
 </html>
